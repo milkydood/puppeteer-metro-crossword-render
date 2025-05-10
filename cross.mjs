@@ -3,7 +3,7 @@ import puppeteer from 'puppeteer';
 (async () => {
   // Launch the browser and open a new blank page
 
-  // const browser = await puppeteer.launch({headless: false});
+  //const browser = await puppeteer.launch({headless: false});
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
@@ -23,6 +23,7 @@ import puppeteer from 'puppeteer';
     dom = document.querySelector('.menu-bar');
     todaydate = new Date();
 
+    // add the current date
     todaydatediv = document.createElement("div");
     todaydatediv.append(todaydate.toISOString().slice(0,10));
 
@@ -43,9 +44,15 @@ import puppeteer from 'puppeteer';
     dom = document.querySelector('.clue-list-scroll');
     dom.classList.remove("clue-list-scroll");
 
-    // move crossword grid into the verical center a little
+    // do a little centering
     dom = document.querySelector('.puzzle-grid');
     dom.style.top = "25%";
+
+    // remove selected clue highlighting
+    var sheet = window.document.styleSheets[0];
+    sheet.insertRule('.cell.selected { background-color: white !important; }', sheet.cssRules.length);
+    sheet.insertRule('.cell.highlighted { background-color: white !important; }', sheet.cssRules.length);
+
   });
 
   await page.screenshot({
@@ -53,5 +60,4 @@ import puppeteer from 'puppeteer';
   });
 
   await browser.close();
-//await browser.close();
 })();
