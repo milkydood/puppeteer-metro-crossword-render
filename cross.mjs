@@ -3,7 +3,7 @@ import puppeteer from 'puppeteer';
 (async () => {
   // Launch the browser and open a new blank page
 
-  //const browser = await puppeteer.launch({headless: false});
+ // const browser = await puppeteer.launch({headless: false});
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
@@ -16,6 +16,9 @@ import puppeteer from 'puppeteer';
   await page.waitForNavigation({
     waitUntil: 'networkidle0',
   });
+
+  await page.addStyleTag({content: '.cell.selected { background-color: white !important; }'});
+  await page.addStyleTag({content: '.cell.highlighted { background-color: white !important; }'});
 
   await page.evaluate(() => {
 
@@ -47,13 +50,10 @@ import puppeteer from 'puppeteer';
     // do a little centering
     dom = document.querySelector('.puzzle-grid');
     dom.style.top = "25%";
-
-    // remove selected clue highlighting
-    var sheet = window.document.styleSheets[0];
-    sheet.insertRule('.cell.selected { background-color: white !important; }', sheet.cssRules.length);
-    sheet.insertRule('.cell.highlighted { background-color: white !important; }', sheet.cssRules.length);
-
   });
+
+  // if this is omitted, the cells don't lose highlighted styles
+  console.log(await page.content());
 
   await page.screenshot({
     path: 'cross.png',
