@@ -8,19 +8,41 @@ import puppeteer from 'puppeteer';
   const page = await browser.newPage();
 
   // Navigate the page to a URL
-  await page.goto('https://d3untqd069jdot.cloudfront.net/puzzles/crossword/latest.html');
+  //await page.goto('https://d3untqd069jdot.cloudfront.net/puzzles/crossword/latest.html');
+  await page.goto('https://metro.co.uk/puzzles/quick-crossword/');
 
   // A4-esque Set screen size
   await page.setViewport({width: 1754, height: 1240});
 
-  await page.waitForNavigation({
-    waitUntil: 'networkidle0',
-  });
+ // await page.waitForNavigation({
+ //   waitUntil: 'networkidle0',
+ // });
+
 
   await page.addStyleTag({content: '.cell.selected { background-color: white !important; }'});
   await page.addStyleTag({content: '.cell.highlighted { background-color: white !important; }'});
 
   await page.evaluate(() => {
+
+    document.getElementsByTagName('header')[0].remove();
+    document.getElementsByTagName('footer')[0].remove();
+
+    document.querySelector('.ad-slot').remove();
+
+    document.querySelector('.trending-puzzles').remove();
+
+    document.querySelector('.trending-now').remove();
+
+    document.querySelector('.portrait-video-carousel').remove();
+
+    document.querySelector('.channel-header').remove();
+
+ //   dom = document.querySelector('.wrapper');
+  //  dom.style.maxWidth = "70rem";
+
+    dom = document.getElementsByTagName('table')[0];
+    dom.removeAttribute('style');
+
 
     // swap menu bar for today's date
     dom = document.querySelector('.menu-bar');
