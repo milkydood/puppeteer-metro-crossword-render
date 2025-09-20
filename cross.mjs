@@ -37,6 +37,8 @@ import puppeteer from 'puppeteer';
 
     document.querySelector('.channel-header').remove();
 
+    document.querySelector('.newsletter-mpu').remove();
+
  //   dom = document.querySelector('.wrapper');
   //  dom.style.maxWidth = "70rem";
 
